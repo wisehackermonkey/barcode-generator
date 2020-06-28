@@ -87,41 +87,45 @@ let num_structure = [
 // 9	LGGLGL	RRRRRR
 
 let current = 0;
+
+let example_bit_pattern 
 function setup() {
     createCanvas(800, 800);
 
     // LEFT GUARD BARS (always the same): 101.
-// SECOND NUMBER SYSTEM DIGIT [5]: Encoded with left-hand odd parity, 0110001.
-// 1st MANUFACTURER DIGIT [0]: Encoding with left-hand even parity, 0100111.
-// 2nd MANUFACTURER DIGIT [1]: Encoded with left-hand odd parity, 0011001.
-// 3rd MANUFACTURER DIGIT [0]: Encoded with left-hand even parity, 0100111.
-// 4th MANUFACTURER DIGIT [3]: Encoded with left-hand odd parity, 0111101.
-// 5th MANUFACTURER DIGIT [1]: Encoded with left-hand even parity, 0110011.
-// CENTAR GUARD BARS (always the same): 01010.
-// 1st PRODUCT CODE DIGIT [3]: Encoded as right-hand character, 1000010.
-// 2nd PRODUCT CODE DIGIT [1]: Encoded as right-hand character, 1100110.
-// 3rd PRODUCT CODE DIGIT [1]: Encoded as right-hand character, 1100110.
-// 4th PRODUCT CODE DIGIT [3]: Encoded as right-hand character, 1000010.
-// 5th PRODUCT CODE DIGIT [0]: Encoded as right-hand character, 1110010.
-// CHECK DIGIT [9]: Encoded as right-hand character, 1110100.
-// RIGHT GUARD BARS (always the same): 101.
+    // SECOND NUMBER SYSTEM DIGIT [5]: Encoded with left-hand odd parity, 0110001.
+    // 1st MANUFACTURER DIGIT [0]: Encoding with left-hand even parity, 0100111.
+    // 2nd MANUFACTURER DIGIT [1]: Encoded with left-hand odd parity, 0011001.
+    // 3rd MANUFACTURER DIGIT [0]: Encoded with left-hand even parity, 0100111.
+    // 4th MANUFACTURER DIGIT [3]: Encoded with left-hand odd parity, 0111101.
+    // 5th MANUFACTURER DIGIT [1]: Encoded with left-hand even parity, 0110011.
+    // CENTAR GUARD BARS (always the same): 01010.
+    // 1st PRODUCT CODE DIGIT [3]: Encoded as right-hand character, 1000010.
+    // 2nd PRODUCT CODE DIGIT [1]: Encoded as right-hand character, 1100110.
+    // 3rd PRODUCT CODE DIGIT [1]: Encoded as right-hand character, 1100110.
+    // 4th PRODUCT CODE DIGIT [3]: Encoded as right-hand character, 1000010.
+    // 5th PRODUCT CODE DIGIT [0]: Encoded as right-hand character, 1110010.
+    // CHECK DIGIT [9]: Encoded as right-hand character, 1110100.
+    // RIGHT GUARD BARS (always the same): 101.
 
-// let example_bit_pattern = "101" +
-// "0110001" +
-// "0100111" +
-// "0011001" +
-// "0100111" +
-// "0111101" +
-// "0110011" +
-// "01010" +
-// "1000010" +
-// "1100110" +
-// "1100110" +
-// "1000010" +
-// "1110010" +
-// "1110100" +"101"
-// print(example_bit_pattern)
-// bits_to_bars(string_to_array(example_bit_pattern), width / 3, width / 3)
+    example_bit_pattern = "101" +
+    "0110001" +
+    "0100111" +
+    "0011001" +
+    "0100111" +
+    "0111101" +
+    "0110011" +
+    "01010" +
+    "1000010" +
+    "1100110" +
+    "1100110" +
+    "1000010" +
+    "1110010" +
+    "1110100" +"101"
+    // print(example_bit_pattern)
+    // bits_to_bars(string_to_array(example_bit_pattern), width / 3, width / 3)
+    example_bit_pattern = string_to_array(example_bit_pattern)
+
 }
 
 function draw() {
@@ -129,17 +133,21 @@ function draw() {
     //101  | <42 digits> | 01010 |  <42 digits> | 101
     // let example_array  = [101    01010 101];
     // bits_to_bars(string_to_array("101110111011"), width / 3, width / 3);
-    bits_to_bars([0,1,0],width / 3, width / 3)
+    let bar_height = 100;
+    let bar_spacing = 6;
+    let bar_location = createVector(mouseX, mouseY);
+    // let example_pattern = [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1];
+    render_barcode(example_bit_pattern, bar_location, bar_spacing, bar_height);
 }
 
-let example2 = ()=>{
+let example2 = () => {
     let left_bit_pattern = map_structure_to_bits("LLLLLL", `003994`);
     let right_bit_pattern = map_structure_to_bits("RRRRRR", `155486`);
     let full_bit_pattern =
         "101" + left_bit_pattern + "01010" + right_bit_pattern + "101";
     print(full_bit_pattern);
     bits_to_bars(full_bit_pattern, width / 3, width / 3);
-}
+};
 let example1 = () => {
     let left_bit_pattern = map_structure_to_bits("LGLGGL", `711253`);
     let right_bit_pattern = map_structure_to_bits("RRRRRR", `001202`);
@@ -181,36 +189,19 @@ let map_structure_to_bits = (encoding, numbers) => {
         }
     }, "");
 };
-
-let bits_to_bars = (array, start_x = 0, start_y = 0) => {
-    let scaler = 1;
+let render_barcode = (bit_pattern, bar_location, bar_spacing, bar_height) => {
     push();
-    strokeWeight(scaler);
-    for (var i = 0; i < array.length-1; i+=1) {
-        // col = ;
-        // debug
-        if (debug) {
-            // if(i <3 && i > array.length -4 && i % 7 == 0) {
-            // col = color(0, array[i] * 255, 255);
+    noStroke();
+    rectMode(CENTER);
 
-            // }else if (i <3 && i > 0){
-            // push();
-            // noStroke();
-            // // col = color("green");
-            // // fill(0, 255, 0, 5);
-            // rect(start_x, start_y + 20, 3 * scaler, start_y+20);
-            // // rect(start_x+array.length * scaler, start_y + 20, 3 * scaler, start_y+20);
-            // pop();
-            // }
-        }
-        //debug end
-        fill(map(array[i],0,1,0,255));
-        // noStroke();
-        line(
-            i * scaler + start_x,
-            start_y,
-            i * scaler + start_x,
-            100 + start_y
+    for (var i = 0; i < bit_pattern.length; i += 1) {
+        fill(map(bit_pattern[i], 0, 1, 255, 0));
+
+        rect(
+            bar_location.x + bar_spacing * i,
+            bar_location.y,
+            bar_spacing,
+            bar_height
         );
     }
     pop();
