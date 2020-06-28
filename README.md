@@ -84,3 +84,5 @@ simple case
 # TODO
 - ~~render a actual example barcode and have it read correctly
     - issue with example check if each bit is correct
+- debug improvements: for start middle and end sentinals render them longer than the other bars like shown in example ![](http://www.barcodeisland.com/ean13-2.gif)
+
