@@ -30,7 +30,8 @@ oranbusiness@gmail.com
 
 # Try v3 still not working for some reason!
 ![](https://i.postimg.cc/DZ6mcsZ2/screenshot-6.png)
-
+#### what its supposed to look like
+![](http://www.barcodeisland.com/ean13-2.gif)
 # funny mistake
 #### [P5.js web editor link](https://editor.p5js.org/wisemonkey/present/3BL7cmc4a)
 ![](https://i.postimg.cc/ChX2FtLs/screenshot-5.png)
