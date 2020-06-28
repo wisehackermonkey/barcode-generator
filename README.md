@@ -81,5 +81,5 @@ simple case
 
 
 # TODO
-- render a actual example barcode and have it read correctly
-    - i suspect some issue is happening  
+- ~~render a actual example barcode and have it read correctly
+    - issue with example check if each bit is correct

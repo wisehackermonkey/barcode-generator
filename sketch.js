@@ -134,8 +134,8 @@ function draw() {
     // let example_array  = [101    01010 101];
     // bits_to_bars(string_to_array("101110111011"), width / 3, width / 3);
     let bar_height = 100;
-    let bar_spacing = 6;
-    let bar_location = createVector(mouseX, mouseY);
+    let bar_spacing = 2;
+    let bar_location = createVector(mouseX+100, mouseY);
     // let example_pattern = [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1];
     render_barcode(example_bit_pattern, bar_location, bar_spacing, bar_height);
 }
