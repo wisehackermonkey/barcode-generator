@@ -88,7 +88,7 @@ let num_structure = [
 
 let current = 0;
 function setup() {
-    createCanvas(400, 400);
+    createCanvas(800, 800);
 
     // LEFT GUARD BARS (always the same): 101.
 // SECOND NUMBER SYSTEM DIGIT [5]: Encoded with left-hand odd parity, 0110001.
@@ -106,29 +106,30 @@ function setup() {
 // CHECK DIGIT [9]: Encoded as right-hand character, 1110100.
 // RIGHT GUARD BARS (always the same): 101.
 
-let example_bit_pattern = "101" +
-"0110001" +
-"0100111" +
-"0011001" +
-"0100111" +
-"0111101" +
-"0110011" +
-"01010" +
-"1000010" +
-"1100110" +
-"1100110" +
-"1000010" +
-"1110010" +
-"1110100" +"101"
-print(example_bit_pattern)
-bits_to_bars(string_to_array(example_bit_pattern), width / 3, width / 3)
+// let example_bit_pattern = "101" +
+// "0110001" +
+// "0100111" +
+// "0011001" +
+// "0100111" +
+// "0111101" +
+// "0110011" +
+// "01010" +
+// "1000010" +
+// "1100110" +
+// "1100110" +
+// "1000010" +
+// "1110010" +
+// "1110100" +"101"
+// print(example_bit_pattern)
+// bits_to_bars(string_to_array(example_bit_pattern), width / 3, width / 3)
 }
 
 function draw() {
-    // background(50);
+    background(50);
     //101  | <42 digits> | 01010 |  <42 digits> | 101
     // let example_array  = [101    01010 101];
     // bits_to_bars(string_to_array("101110111011"), width / 3, width / 3);
+    bits_to_bars([0,1,0],width / 3, width / 3)
 }
 
 let example2 = ()=>{
@@ -185,8 +186,8 @@ let bits_to_bars = (array, start_x = 0, start_y = 0) => {
     let scaler = 1;
     push();
     strokeWeight(scaler);
-    for (var i = array.length+1; i >=0 ; i--) {
-        col = abs(array[i] * -255);
+    for (var i = 0; i < array.length-1; i+=1) {
+        // col = ;
         // debug
         if (debug) {
             // if(i <3 && i > array.length -4 && i % 7 == 0) {
@@ -203,9 +204,9 @@ let bits_to_bars = (array, start_x = 0, start_y = 0) => {
             // }
         }
         //debug end
-        fill(col);
-        noStroke();
-        rect(
+        fill(map(array[i],0,1,0,255));
+        // noStroke();
+        line(
             i * scaler + start_x,
             start_y,
             i * scaler + start_x,

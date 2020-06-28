@@ -53,7 +53,7 @@ is it actaull 13 digit max
 
 pattern mapping
 ```
-first digit = 1
+first digit = 13
 mapping is LLGLGG
 
 L for digit 5
@@ -70,5 +70,10 @@ expands to
 
 simple case 
 
+101 01010 101
 ```
 
+
+# TODO
+- render a actual example barcode and have it read correctly
+    - i suspect some issue is happening  
