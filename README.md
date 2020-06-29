@@ -32,10 +32,15 @@ oranbusiness@gmail.com
 ![](https://i.postimg.cc/DZ6mcsZ2/screenshot-6.png)
 #### what its supposed to look like
 ![](http://www.barcodeisland.com/ean13-2.gif)
+
+
+# update figured out why id didnt scan the aspect ration was way off!
+#### i overlayed the refrence with mine and it showed the issue
+![](./Screenshot_2.png)
+
 # funny mistake
 #### [P5.js web editor link](https://editor.p5js.org/wisemonkey/present/3BL7cmc4a)
 ![](https://i.postimg.cc/ChX2FtLs/screenshot-5.png)
-# TODO list
 
 # brain storming
 - map array of bits to pixels
@@ -86,3 +91,4 @@ simple case
     - issue with example check if each bit is correct
 - debug improvements: for start middle and end sentinals render them longer than the other bars like shown in example ![](http://www.barcodeisland.com/ean13-2.gif)
 
+- debug using photoshop overly exapcted with actual
