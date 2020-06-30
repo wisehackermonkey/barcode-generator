@@ -136,7 +136,7 @@ function setup() {
 }
 
 function draw() {
-    // background(55);
+    background(55);
     //101  | <42 digits> | 01010 |  <42 digits> | 101
     // let example_array  = [101    01010 101];
     // bits_to_bars(string_to_array("101110111011"), width / 3, width / 3);
@@ -148,6 +148,10 @@ function draw() {
 
     info_text();
     generate_barcode(bar_location)
+    popup(`Barcode Generator
+scan the barcode with phone
+ or
+print out this page then scan`,5);
 }
 
 let generate_barcode = (location)=>{
