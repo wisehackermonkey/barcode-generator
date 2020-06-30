@@ -151,7 +151,7 @@ function draw() {
     popup(`Barcode Generator
 scan the barcode with phone
  or
-print out this page then scan`,5);
+print out this page then scan`,2);
 }
 
 let generate_barcode = (location)=>{
