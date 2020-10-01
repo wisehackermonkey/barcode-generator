@@ -21,7 +21,7 @@ test('returns number array from number string', t => {
 
 
 
-test('returns number encoding using r l or g, encodings fallowing the EAN-13 encoding sceme', t => {
+test('returns number encoding using r l or g, encodings fallowing the EAN-13 encoding skeme', t => {
     t.equal(map_structure_to_bits("LLLLLL", `003994`), "000110100011010111101000101100010110100011");
     t.equal(map_structure_to_bits("LGLGLG", `711253`), "011101101100110011001001101101100010100001");
     t.equal(map_structure_to_bits("LGLGLG", `000000`), "000110101001110001101010011100011010100111");

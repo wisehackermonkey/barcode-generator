@@ -1,16 +1,14 @@
 // barcode generator
+
 // by oran collins
 // github.com/wisehackermonkey
 // oranbusiness@gmail.com
 // 20200625
-// TODO add debug coloring
 
-let debug = true;
+// NOTE:
+// code for generating the bitpattern of the barcode 
+// look at ./crc.js 
 
-// let g_encoding = {0: "0100111",1: "0110011",2: "0011011",3: "0100001",4: "0011101",5: "0111001",6: "0000101",7: "0010001",8: "0001001",9: "0010111",}
-
-
-// let encoder = {"R":[],"G":[],"L":[]}
 // Encoding of the digits
 // Digit L-code	G-code	R-code
 // 0	0001101	0100111	1110010
@@ -24,9 +22,7 @@ let debug = true;
 // 8	0110111	0001001	1001000
 // 9	0001011	0010111	1110100
 
-
-
-// Structure of EAN-13
+// Encoding pattern Structure of EAN-13
 // First digit	First group of 6 digits	Last group of 6 digits
 // 0	LLLLLL	RRRRRR
 // 1	LLGLGG	RRRRRR
@@ -39,101 +35,39 @@ let debug = true;
 // 8	LGLGGL	RRRRRR
 // 9	LGGLGL	RRRRRR
 
-let current = 0;
-
 let example_bit_pattern;
 
 
-let bar_height = 100;
-let bar_spacing = .7;
-let bar_location 
-let barwidth = 2;
+let bar_height = 100; //barcode's hight
+let bar_spacing = .7; //space between bars
+let barwidth = 2; //width of bars
+
 function setup() {
     createCanvas(800, 800);
     bar_location = createVector(width / 3, width / 3);
     noSmooth()
-    // noStroke()
-    // LEFT GUARD BARS (always the same): 101.
-    // SECOND NUMBER SYSTEM DIGIT [5]: Encoded with left-hand odd parity, 0110001.
-    // 1st MANUFACTURER DIGIT [0]: Encoding with left-hand even parity, 0100111.
-    // 2nd MANUFACTURER DIGIT [1]: Encoded with left-hand odd parity, 0011001.
-    // 3rd MANUFACTURER DIGIT [0]: Encoded with left-hand even parity, 0100111.
-    // 4th MANUFACTURER DIGIT [3]: Encoded with left-hand odd parity, 0111101.
-    // 5th MANUFACTURER DIGIT [1]: Encoded with left-hand even parity, 0110011.
-    // CENTER GUARD BARS (always the same): 01010.
-    // 1st PRODUCT CODE DIGIT [3]: Encoded as right-hand character, 1000010.
-    // 2nd PRODUCT CODE DIGIT [1]: Encoded as right-hand character, 1100110.
-    // 3rd PRODUCT CODE DIGIT [1]: Encoded as right-hand character, 1100110.
-    // 4th PRODUCT CODE DIGIT [3]: Encoded as right-hand character, 1000010.
-    // 5th PRODUCT CODE DIGIT [0]: Encoded as right-hand character, 1110010.
-    // CHECK DIGIT [9]: Encoded as right-hand character, 1110100.
-    // RIGHT GUARD BARS (always the same): 101.
 
-    // example_bit_pattern =
-    //     "101" +//left  sentinel
-    //     "0110001" +
-    //     "0100111" +
-    //     "0011001" +
-    //     "0100111" +
-    //     "0111101" +
-    //     "0110011" +
-    //     "01010" + //center
-    //     "1000010" +
-    //     "1100110" +
-    //     "1100110" +
-    //     "1000010" +
-    //     "1110010" +
-    //     "1110100" +
-    //     "101"; //right sentinel
-
-    // test number : 111111111111
-    // encoding: 1111111111116 [6 being the check digit]
-    // See readme for a fuller breakdown of the numbers here
-    
-    // example_bit_pattern =
-    // "101" + //left  sentinel
-    // "0011001"+ "0011001"+ "0110011"+ "0011001"+ "0110011"+ "0110011"+ //left encoded
-    // "01010"+ //center
-    // "1100110"+ "1100110"+ "1100110"+ "1100110"+ "1100110"+ //right encoded
-    // "1010000"+ //check digit (6)
-    // "101"//right sentinel
     example_bit_pattern = generate_bit_pattern("750103131130")
-    // print(example_bit_pattern)   
-    
-    // print(example_bit_pattern)
-    // bits_to_bars(string_to_array(example_bit_pattern), width / 3, width / 3)
-    // example_bit_pattern = string_to_array(example2());
+
 }
 
 function draw() {
     background(55);
-    // 101 | <42 digits> | 01010 |  <42 digits> | 101
-    // let example_array  = [101    01010 101];
-    // bits_to_bars(string_to_array("101110111011"), width / 3, width / 3);
-
-
-    // let example_pattern = [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1];
-
-    // background rectangle white, and above text
-
     info_text();
-    generate_barcode(bar_location)
     bit_pattern = string_to_array(example_bit_pattern);
     background_rect(bar_location,bit_pattern);
     render_barcode(bit_pattern, bar_location, bar_spacing, bar_height);
 
-//     popup(`Barcode Generator
-// scan the barcode with phone
-//  or
-// print out this page then scan`,6);
+    popup(`Barcode Generator
+scan the barcode with phone
+ or
+print out this page then scan`,6);
 }
 
+// barcode rendering(show on screen)
+// -------------------------
 
-let generate_barcode = (location)=>{
-    // bit_pattern = string_to_array(example_bit_pattern);
-    // background_rect(location,bit_pattern);
-    // render_barcode(bit_pattern, location, bar_spacing, bar_height);
-}
+//  draw a white box behind the barcode
 let background_rect = (_bar_location,bit_pattern) => {
     push();
     // rectMode(CORN);
@@ -146,45 +80,10 @@ let background_rect = (_bar_location,bit_pattern) => {
     );
     pop();
 };
-let example1 = () => {
-    let left_bit_pattern = map_structure_to_bits("LGLGLG", `711253`);
-    let right_bit_pattern = map_structure_to_bits("RRRRRR",`001202`);
-    let full_bit_pattern =
-        "101" + left_bit_pattern + "01010" + right_bit_pattern + "101";
-        return full_bit_pattern
-
-};
-
-let example2 = () => {
-    let left_bit_pattern = map_structure_to_bits("LLLLLL", `003994`);
-    let right_bit_pattern = map_structure_to_bits("RRRRRR", `155486`);
-    let full_bit_pattern =
-        "101" + left_bit_pattern + "01010" + right_bit_pattern + "101";
-    return full_bit_pattern
-};
-
-let demo_app = () => {
-    let bit_pattern = map_structure_to_bits(
-        "LLL",
-        `${current}${current}${abs(current - 10)}`
-    );
-    bits_to_bars(bit_pattern, width / 3, width / 3);
-
-    if (frameCount % 10 === 0) {
-        current++;
-        if (current >= 9) {
-            current = 0;
-        }
-    }
-};
 
 
 
-
-
-
-
-// barcode rendering(show on screen)
+// Informational onscreen text
 let info_text = () => {
     push();
     textSize(40);
@@ -196,6 +95,7 @@ let info_text = () => {
     pop();
 };
 
+// actually render the barcode on screen
 let render_barcode = (bit_pattern, bar_location, bar_spacing, bar_height) => {
     push();
     // noStroke();

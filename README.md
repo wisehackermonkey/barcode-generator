@@ -42,6 +42,7 @@ oranbusiness@gmail.com
 #### [P5.js web editor link](https://editor.p5js.org/wisemonkey/present/3BL7cmc4a)
 ![](https://i.postimg.cc/ChX2FtLs/screenshot-5.png)
 
+
 # brain storming
 - map array of bits to pixels
 - map array to lines 
@@ -172,19 +173,30 @@ GOAL
 write code that converts the whole train for 1 digit
 
 ```
+# Update got it working! (20201001)
+![download (6)](/assets/download%20(6).png)
+### note
+#### still issue with scanning from phone. weird but works with www.onlinebarcodereader.com
 
+#also added node tests!
 # testing 
 ```bash
 npm install --save-dev tape faucet
 npx tape test/**/*.js
+
+nodemon --exec npx tape test/**/*.js
 ```
 
 # TODO
-- ~~render a actual example barcode and have it read correctly
+- ~~render a actual example barcode and have it read correctly~~
     - ~~issue with example check if each bit is correct~~
-- ~~debug improvements: for start middle and end sentinals render them longer than the other bars like shown in example ![](http://www.barcodeisland.com/ean13-2.gif)~
+- ~~debug improvements: for start middle and end sentinals render them longer than the other bars like shown in example~~
+ ![](http://www.barcodeisland.com/ean13-2.gif)
 
 - ~~debug using photoshop overly exapcted with actual~~
-- arbitray number enter to render barcode
-    - implement crc calculation
-    - map first number string[0] to LGGLLG thing
+- ~~arbitray number enter to render barcode~~
+    - ~~implement crc calculation~~
+    - ~~map first number string[0] to LGGLLG thing~~
+- add input box for new barcode numbers
+- fix phone not reading issue
+- publish to ghpages

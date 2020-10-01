@@ -104,6 +104,8 @@ let string_to_array = (binary_string) => {
         return parseInt(x);
     });
 };
+
+// number encoding using r l or g, encodings fallowing the EAN-13 encoding skeme
 let map_structure_to_bits = (encoding, numbers) => {
     nums_map = string_to_array(numbers);
     return encoding.split("").reduce((accumulator, digit_type, index) => {
@@ -117,21 +119,24 @@ let map_structure_to_bits = (encoding, numbers) => {
     }, "");
 };
 
+// fully encoded bit string of a barcode including crc
 let generate_bit_pattern = (number_string) => {
     pattern_number = parseInt(number_string[0])
+    
     encding_pattern = num_structure[pattern_number]
-    crc_number = crc_generate(number_string)
-    number_string += crc_number
+
+    number_string += crc_generate(number_string)
+
     number_string = number_string.slice(1)
+
     left_group = number_string.slice(0,6)
     right_group = number_string.slice(6,12)
-    // print(left_group,", ",right_group)
+
     let left_bit_pattern = map_structure_to_bits(encding_pattern, left_group);
+    //note: "RRRRRR" is always used because the EAN-13 standard has the right group's
+    // encoding never change see WIKI article about it
     let right_bit_pattern = map_structure_to_bits("RRRRRR",right_group);
-    // print(left_bit_pattern,",",right_bit_pattern)
-    let full_bit_pattern =
-        "101" + left_bit_pattern + "01010" + right_bit_pattern + "101";
-        return full_bit_pattern
+    return `101${ left_bit_pattern }01010${ right_bit_pattern }101`
 
 };
 exports.crc_generate = crc_generate
