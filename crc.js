@@ -42,6 +42,61 @@ var crc_generate = (number) => {
     return CalculateEAN13Checksum(number,0)
 }
 
+// The raw bit pattern encodings for each 0-9 digits
+// these magic values are pulled from this wikipdea page
+// https://en.wikipedia.org/wiki/International_Article_Number
+let g_encoding = [
+    "0100111",
+    "0110011",
+    "0011011",
+    "0100001",
+    "0011101",
+    "0111001",
+    "0000101",
+    "0010001",
+    "0001001",
+    "0010111",
+];
+
+let l_encoding = [
+    "0001101",
+    "0011001",
+    "0010011",
+    "0111101",
+    "0100011",
+    "0110001",
+    "0101111",
+    "0111011",
+    "0110111",
+    "0001011",
+];
+let r_encoding = [
+    "1110010",
+    "1100110",
+    "1101100",
+    "1000010",
+    "1011100",
+    "1001110",
+    "1010000",
+    "1000100",
+    "1001000",
+    "1110100",
+];
+
+// bit pattern encoding see wiki for more info
+let num_structure = [
+    "LLLLLL",
+    "LLGLGG",
+    "LLGGLG",
+    "LLGGGL",
+    "LGLLGG",
+    "LGGLLG",
+    "LGGGLL",
+    "LGLGLG",
+    "LGLGGL",
+    "LGGLGL",
+];
+
 // convert string to an array of numbers
 //"1011100" -> [1, 0, 1, 1, 1, 0, 0]
 let string_to_array = (binary_string) => {
@@ -49,6 +104,38 @@ let string_to_array = (binary_string) => {
         return parseInt(x);
     });
 };
+let map_structure_to_bits = (encoding, numbers) => {
+    nums_map = string_to_array(numbers);
+    return encoding.split("").reduce((accumulator, digit_type, index) => {
+        if (digit_type == "G") {
+            return accumulator + g_encoding[nums_map[index]];
+        } else if (digit_type == "L") {
+            return accumulator + l_encoding[nums_map[index]];
+        } else if (digit_type == "R") {
+            return accumulator + r_encoding[nums_map[index]];
+        }
+    }, "");
+};
+
+let generate_bit_pattern = (number_string) => {
+    pattern_number = parseInt(number_string[0])
+    encding_pattern = num_structure[pattern_number]
+    crc_number = crc_generate(number_string)
+    number_string += crc_number
+    number_string = number_string.slice(1)
+    left_group = number_string.slice(0,6)
+    right_group = number_string.slice(6,12)
+    // print(left_group,", ",right_group)
+    let left_bit_pattern = map_structure_to_bits(encding_pattern, left_group);
+    let right_bit_pattern = map_structure_to_bits("RRRRRR",right_group);
+    // print(left_bit_pattern,",",right_bit_pattern)
+    let full_bit_pattern =
+        "101" + left_bit_pattern + "01010" + right_bit_pattern + "101";
+        return full_bit_pattern
+
+};
 exports.crc_generate = crc_generate
 exports.string_to_array = string_to_array
+exports.map_structure_to_bits = map_structure_to_bits
+exports.generate_bit_pattern = generate_bit_pattern
 
