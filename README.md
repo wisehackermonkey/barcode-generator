@@ -155,7 +155,7 @@ LEFT hand encoded
 11:1(ALL):even code for number 1 is 1100110
 
 Check digit
-12: 6(ALL):even code for number 6 is 1010000
+12:6(ALL):even code for number 6 is 1010000
 
 Right Guards:                       101
 

@@ -94,7 +94,7 @@ let example_bit_pattern;
 let bar_height = 100;
 let bar_spacing = .7;
 let bar_location 
-let barwidth = 4;
+let barwidth = 2;
 function setup() {
     createCanvas(800, 800);
     bar_location = createVector(width / 3, width / 3);
@@ -147,12 +147,12 @@ function setup() {
     
     // print(example_bit_pattern)
     // bits_to_bars(string_to_array(example_bit_pattern), width / 3, width / 3)
-    example_bit_pattern = string_to_array(example2());
+    // example_bit_pattern = string_to_array(example2());
 }
 
 function draw() {
-    // background(55);
-    //101  | <42 digits> | 01010 |  <42 digits> | 101
+    background(55);
+    // 101 | <42 digits> | 01010 |  <42 digits> | 101
     // let example_array  = [101    01010 101];
     // bits_to_bars(string_to_array("101110111011"), width / 3, width / 3);
 
@@ -163,24 +163,28 @@ function draw() {
 
     info_text();
     generate_barcode(bar_location)
-    popup(`Barcode Generator
-scan the barcode with phone
- or
-print out this page then scan`,6);
+    bit_pattern = string_to_array(example_bit_pattern);
+    background_rect(bar_location,bit_pattern);
+    render_barcode(bit_pattern, bar_location, bar_spacing, bar_height);
+
+//     popup(`Barcode Generator
+// scan the barcode with phone
+//  or
+// print out this page then scan`,6);
 }
 
 let generate_barcode = (location)=>{
-    bit_pattern = string_to_array(example1());
+    // bit_pattern = string_to_array(example_bit_pattern);
     // background_rect(location,bit_pattern);
-    render_barcode(bit_pattern, location, bar_spacing, bar_height);
+    // render_barcode(bit_pattern, location, bar_spacing, bar_height);
 }
 let background_rect = (_bar_location,bit_pattern) => {
     push();
-    rectMode(CENTER);
+    // rectMode(CORN);
 
     rect(
-        _bar_location.x + (bit_pattern.length * (bar_spacing*barwidth)) / 2,
-        _bar_location.y,
+        _bar_location.x -10,
+        _bar_location.y-10,
         bit_pattern.length * bar_spacing + 40 *barwidth,
         bar_height + 20
     );
@@ -252,7 +256,7 @@ let render_barcode = (bit_pattern, bar_location, bar_spacing, bar_height) => {
     // strokeWeight(0)
 
     // rectMode(CENTER);
-    //3 |7 width x 6 times  |5 |7 width x 6 times |3 
+    //3 | 7 width x 6 times  | 5 | 7 width x 6 times | 3 
     for (var i = 0; i < bit_pattern.length; i += 1) {
         
 
@@ -266,7 +270,7 @@ let render_barcode = (bit_pattern, bar_location, bar_spacing, bar_height) => {
         line(bar_location.x+i*barwidth, 100,
              bar_location.x+i*barwidth, 100 + 100 )
         rect(
-            bar_location.x + bar_spacing * (i*barwidth)-1,
+            bar_location.x + bar_spacing * (i*barwidth) - 1,
             bar_location.y,
             bar_spacing*barwidth,
             bar_height
@@ -274,8 +278,8 @@ let render_barcode = (bit_pattern, bar_location, bar_spacing, bar_height) => {
     }
     strokeWeight(0)
     // rectMode(CORNER);
-    fill(color(0,255, 0,100));
-    rect(bar_location.x  - bar_spacing , bar_location.y , 10    , bar_height)
+    // fill(color(0,255, 0,100));
+    // rect(bar_location.x  - bar_spacing , bar_location.y , 10    , bar_height)
 
     // let flip = false
     // for (var i = 0; i < 40; i += 1) {
