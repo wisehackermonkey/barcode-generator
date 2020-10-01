@@ -1,0 +1,24 @@
+{
+  "name": "barcode-generator",
+  "version": "1.0.0",
+  "description": "p5.js app to generate barcodes given some data\r [![P5.js](https://img.shields.io/badge/P5.js-Enabled-pink.svg)](https://shields.io/)[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)\r ```\r by oran collins\r github.com/wisehackermonkey\r oranbusiness@gmail.com\r 20200625\r ```",
+  "main": " ",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wisehackermonkey/barcode-generator.git"
+  },
+  "author": "wisehackermonkey",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/wisehackermonkey/barcode-generator/issues"
+  },
+  "homepage": "https://github.com/wisehackermonkey/barcode-generator#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "faucet": "0.0.1",
+    "tape": "^5.0.1"
+  }
+}

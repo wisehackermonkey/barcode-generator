@@ -173,6 +173,12 @@ write code that converts the whole train for 1 digit
 
 ```
 
+# testing 
+```bash
+npm install --save-dev tape faucet
+npx tape test/**/*.js
+```
+
 # TODO
 - ~~render a actual example barcode and have it read correctly
     - ~~issue with example check if each bit is correct~~

@@ -144,8 +144,9 @@ function setup() {
     // "1100110"+ "1100110"+ "1100110"+ "1100110"+ "1100110"+ //right encoded
     // "1010000"+ //check digit (6)
     // "101"//right sentinel
-    example_bit_pattern = generate_bit_pattern("7501031311309")
-    print(example_bit_pattern)
+    example_bit_pattern = generate_bit_pattern("750103131130")
+    // print(example_bit_pattern)   
+    
     // print(example_bit_pattern)
     // bits_to_bars(string_to_array(example_bit_pattern), width / 3, width / 3)
     // example_bit_pattern = string_to_array(example2());
@@ -174,21 +175,6 @@ function draw() {
 // print out this page then scan`,6);
 }
 
-let generate_bit_pattern = (number_string) => {
-    pattern_number = parseInt(number_string[0])
-    encding_pattern = num_structure[pattern_number]
-    number_string = number_string.slice(1)
-    left_group = number_string.slice(0,6)
-    right_group = number_string.slice(6,12)
-    // print(left_group,", ",right_group)
-    let left_bit_pattern = map_structure_to_bits(encding_pattern, left_group);
-    let right_bit_pattern = map_structure_to_bits("RRRRRR",right_group);
-    // print(left_bit_pattern,",",right_bit_pattern)
-    let full_bit_pattern =
-        "101" + left_bit_pattern + "01010" + right_bit_pattern + "101";
-        return full_bit_pattern
-
-};
 
 let generate_barcode = (location)=>{
     // bit_pattern = string_to_array(example_bit_pattern);
@@ -205,16 +191,6 @@ let background_rect = (_bar_location,bit_pattern) => {
         bit_pattern.length * bar_spacing + 40 *barwidth,
         bar_height + 20
     );
-    pop();
-};
-let info_text = () => {
-    push();
-    textSize(40);
-
-    text("Barcode Generator By Oran", 100, 100);
-    textAlign(CENTER);
-    text("20200628", 350, 100 + 40 + 5);
-
     pop();
 };
 let example1 = () => {
@@ -248,6 +224,27 @@ let demo_app = () => {
         }
     }
 };
+
+
+
+let generate_bit_pattern = (number_string) => {
+    pattern_number = parseInt(number_string[0])
+    encding_pattern = num_structure[pattern_number]
+    crc_number = crc_generate(number_string)
+    number_string += crc_number
+    number_string = number_string.slice(1)
+    left_group = number_string.slice(0,6)
+    right_group = number_string.slice(6,12)
+    // print(left_group,", ",right_group)
+    let left_bit_pattern = map_structure_to_bits(encding_pattern, left_group);
+    let right_bit_pattern = map_structure_to_bits("RRRRRR",right_group);
+    // print(left_bit_pattern,",",right_bit_pattern)
+    let full_bit_pattern =
+        "101" + left_bit_pattern + "01010" + right_bit_pattern + "101";
+        return full_bit_pattern
+
+};
+// convert string to an array of numbers
 //"1011100" -> [1, 0, 1, 1, 1, 0, 0]
 let string_to_array = (binary_string) => {
     return binary_string.split("").map((x) => {
@@ -267,6 +264,18 @@ let map_structure_to_bits = (encoding, numbers) => {
         }
     }, "");
 };
+// barcode rendering(show on screen)
+let info_text = () => {
+    push();
+    textSize(40);
+
+    text("Barcode Generator By Oran", 100, 100);
+    textAlign(CENTER);
+    text("20200628", 350, 100 + 40 + 5);
+
+    pop();
+};
+
 let render_barcode = (bit_pattern, bar_location, bar_spacing, bar_height) => {
     push();
     // noStroke();
