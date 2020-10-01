@@ -85,6 +85,93 @@ simple case
 101 01010 101
 ```
 
+# Working out a case for 111111111111 (111-111-111-111) len 12
+```text
+first digit is 1 so encode second group with RRRRRR
+[if digit is 0 then encode with pattern      LLLLLL]
+number    encoding
+111-111 = 
+111-111 = RRRRRR
+Check digit (CRC) is = 6
+
+Encoding of the digits
+      ODD    all     even
+Num L-code	G-code	R-code
+0	0001101	0100111	1110010
+1	0011001	0110011	1100110
+2	0010011	0011011	1101100
+3	0111101	0100001	1000010
+4	0100011	0011101	1011100
+5	0110001	0111001	1001110
+6	0101111	0000101	1010000
+7	0111011	0010001	1000100
+8	0110111	0001001	1001000
+9	0001011	0010111	1110100
+
+ 
+DIGIT
+         LEFT        RIGHT
+     ODD      EVEN |  ALL
+0	0001101	0100111	1110010
+1	0011001	0110011	1100110
+2	0010011	0011011	1101100
+3	0111101	0100001	1000010
+4	0100011	0011101	1011100
+5	0110001	0111001	1001110
+6	0101111	0000101	1010000
+7	0111011	0010001	1000100
+8	0110111	0001001	1001000
+9	0001011	0010111	1110100
+
+number breakdown
+11 country code
+11111 manaugature code 
+11111 right hand side 
+6 check digit
+
+More detail
+
+EAN PARITY ENCODING TABLE
+Encoding of the digits
+                      1   2   3    4    5   6
+0: 1 is the pattern Odd|Odd|Even|Odd|Even|Even (is implied and not actually rendered weird but par for the system)
+
+Left guard:                          101
+LEFT hand encoded
+1: 1 (odd): odd code for number 1 is 0011001
+2: 1 (odd): odd code for number 1 is 0011001
+3: 1(Even):even code for number 1 is 0110011
+4: 1 (Odd): odd code for number 1 is 0011001
+5: 1(Even):even code for number 1 is 0110011
+6: 1(Even):even code for number 1 is 0110011
+
+CENTER Guard:                        01010
+
+LEFT hand encoded
+7: 1(ALL):even code for number 1 is 1100110
+8: 1(ALL):even code for number 1 is 1100110
+9: 1(ALL):even code for number 1 is 1100110
+10:1(ALL):even code for number 1 is 1100110
+11:1(ALL):even code for number 1 is 1100110
+
+Check digit
+12: 6(ALL):even code for number 6 is 1010000
+
+Right Guards:                       101
+
+
+Full Encoding 
+101      left guard
+0011001 0011001 0110011 0011001 0110011 0110011 
+01010    center
+1100110 1100110 1100110 1100110 1100110 
+1010000  check 
+101      right guard
+
+GOAL 
+write code that converts the whole train for 1 digit
+
+```
 
 # TODO
 - ~~render a actual example barcode and have it read correctly

@@ -94,10 +94,12 @@ let example_bit_pattern;
 let bar_height = 100;
 let bar_spacing = .7;
 let bar_location 
+let barwidth = 4;
 function setup() {
     createCanvas(800, 800);
     bar_location = createVector(width / 3, width / 3);
     noSmooth()
+    // noStroke()
     // LEFT GUARD BARS (always the same): 101.
     // SECOND NUMBER SYSTEM DIGIT [5]: Encoded with left-hand odd parity, 0110001.
     // 1st MANUFACTURER DIGIT [0]: Encoding with left-hand even parity, 0100111.
@@ -114,29 +116,42 @@ function setup() {
     // CHECK DIGIT [9]: Encoded as right-hand character, 1110100.
     // RIGHT GUARD BARS (always the same): 101.
 
+    // example_bit_pattern =
+    //     "101" +//left  sentinel
+    //     "0110001" +
+    //     "0100111" +
+    //     "0011001" +
+    //     "0100111" +
+    //     "0111101" +
+    //     "0110011" +
+    //     "01010" + //center
+    //     "1000010" +
+    //     "1100110" +
+    //     "1100110" +
+    //     "1000010" +
+    //     "1110010" +
+    //     "1110100" +
+    //     "101"; //right sentinel
+
+    // test number : 111111111111
+    // encoding: 1111111111116 [6 being the check digit]
+    // See readme for a fuller breakdown of the numbers here
+    
     example_bit_pattern =
-        "101" +
-        "0110001" +
-        "0100111" +
-        "0011001" +
-        "0100111" +
-        "0111101" +
-        "0110011" +
-        "01010" +
-        "1000010" +
-        "1100110" +
-        "1100110" +
-        "1000010" +
-        "1110010" +
-        "1110100" +
-        "101";
+    "101" + //left  sentinel
+    "0011001"+ "0011001"+ "0110011"+ "0011001"+ "0110011"+ "0110011"+ //left encoded
+    "01010"+ //center
+    "1100110"+ "1100110"+ "1100110"+ "1100110"+ "1100110"+ //right encoded
+    "1010000"+ //check digit (6)
+    "101"//right sentinel
+    
     // print(example_bit_pattern)
     // bits_to_bars(string_to_array(example_bit_pattern), width / 3, width / 3)
     example_bit_pattern = string_to_array(example2());
 }
 
 function draw() {
-    background(55);
+    // background(55);
     //101  | <42 digits> | 01010 |  <42 digits> | 101
     // let example_array  = [101    01010 101];
     // bits_to_bars(string_to_array("101110111011"), width / 3, width / 3);
@@ -156,7 +171,7 @@ print out this page then scan`,6);
 
 let generate_barcode = (location)=>{
     bit_pattern = string_to_array(example1());
-    background_rect(location,bit_pattern);
+    // background_rect(location,bit_pattern);
     render_barcode(bit_pattern, location, bar_spacing, bar_height);
 }
 let background_rect = (_bar_location,bit_pattern) => {
@@ -164,9 +179,9 @@ let background_rect = (_bar_location,bit_pattern) => {
     rectMode(CENTER);
 
     rect(
-        _bar_location.x + (bit_pattern.length * bar_spacing) / 2,
+        _bar_location.x + (bit_pattern.length * (bar_spacing*barwidth)) / 2,
         _bar_location.y,
-        bit_pattern.length * bar_spacing + 40,
+        bit_pattern.length * bar_spacing + 40 *barwidth,
         bar_height + 20
     );
     pop();
@@ -233,18 +248,79 @@ let map_structure_to_bits = (encoding, numbers) => {
 };
 let render_barcode = (bit_pattern, bar_location, bar_spacing, bar_height) => {
     push();
-    noStroke();
-    rectMode(CENTER);
+    // noStroke();
+    // strokeWeight(0)
 
+    // rectMode(CENTER);
+    //3 |7 width x 6 times  |5 |7 width x 6 times |3 
     for (var i = 0; i < bit_pattern.length; i += 1) {
-        fill(map(bit_pattern[i], 0, 1, 255, 0));
+        
 
+        fill(map(bit_pattern[i], 0, 1, 255, 0));
+        stroke(map(bit_pattern[i], 0, 1, 255, 0));
+        strokeWeight(barwidth)
+        strokeCap(SQUARE);
+
+
+        // // var loc = 100;
+        line(bar_location.x+i*barwidth, 100,
+             bar_location.x+i*barwidth, 100 + 100 )
         rect(
-            bar_location.x + bar_spacing * i,
+            bar_location.x + bar_spacing * (i*barwidth)-1,
             bar_location.y,
-            bar_spacing,
+            bar_spacing*barwidth,
             bar_height
         );
     }
+    strokeWeight(0)
+    // rectMode(CORNER);
+    fill(color(0,255, 0,100));
+    rect(bar_location.x  - bar_spacing , bar_location.y , 10    , bar_height)
+
+    // let flip = false
+    // for (var i = 0; i < 40; i += 1) {
+        
+    //     if( i % 7 == 0){
+            
+    //         flip = !flip;
+            
+    //         // fill(0,255, 0,flip?100:0);
+    //         fill(flip?color(0,255, 0,100):color(255,0, 255,50));
+
+    //         rect(
+    //             bar_location.x + bar_spacing * (i*barwidth)+12,
+    //             bar_location.y + 50,
+    //             bar_spacing*barwidth *7,
+    //             bar_height
+    //         );
+    //    }
+    // }
+
+    // var i = 45;
+    // fill(0,0,255,100);
+    // rect(
+    //     bar_location.x + bar_spacing * (i*barwidth)+3,
+    //     bar_location.y + 50,
+    //     bar_spacing*barwidth *7,
+    //     bar_height
+    // );
+
+
+    // for (var i = 45; i < 40+45; i += 1) {
+        
+    //     if( i % 7 == 0){
+            
+    //         flip = !flip;
+            
+    //         fill(flip ? color(0,255, 0,100) : color(255,0, 255,50));
+    //         rect(
+    //             bar_location.x + bar_spacing * (i*barwidth)+9,
+    //             bar_location.y + 50,
+    //             bar_spacing*barwidth *7,
+    //             bar_height
+    //         );
+    //    }
+    // }
+
     pop();
 };
