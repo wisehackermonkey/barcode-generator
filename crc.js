@@ -41,5 +41,14 @@ return checksumDigit
 var crc_generate = (number) => {
     return CalculateEAN13Checksum(number,0)
 }
+
+// convert string to an array of numbers
+//"1011100" -> [1, 0, 1, 1, 1, 0, 0]
+let string_to_array = (binary_string) => {
+    return binary_string.split("").map((x) => {
+        return parseInt(x);
+    });
+};
 exports.crc_generate = crc_generate
+exports.string_to_array = string_to_array
 

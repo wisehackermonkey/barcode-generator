@@ -244,13 +244,7 @@ let generate_bit_pattern = (number_string) => {
         return full_bit_pattern
 
 };
-// convert string to an array of numbers
-//"1011100" -> [1, 0, 1, 1, 1, 0, 0]
-let string_to_array = (binary_string) => {
-    return binary_string.split("").map((x) => {
-        return int(x);
-    });
-};
+
 
 let map_structure_to_bits = (encoding, numbers) => {
     nums_map = string_to_array(numbers);
