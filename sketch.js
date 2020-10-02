@@ -61,13 +61,13 @@ function set_generate() {
         // regex breakdown regexr.com/5d7v8
         let contains_letters = (barcode_number.match(/([^\d])+/g) || []).length
         if (is_number === 1) {
-            alert(`Error Not enough digits: please enter 12 digit number, EX: 12345678901, please add ${12 - barcode_number.length}`)
+            alert(`Error Not enough digits: please enter 12 digit number, EX: 123456789012, please add ${12 - barcode_number.length}`)
 
         }
         if (contains_letters === 1) {
-            alert(`Error Please only enter numbers: please enter 12 digit number, EX: 12345678901`)
+            alert(`Error Please only enter numbers: please enter 12 digit number, EX: 123456789012`)
         } else {
-            alert("Error: please enter 12 digit number, EX: 12345678901 ")
+            alert("Error: please enter 12 digit number, EX: 123456789012 ")
         }
     }
 
