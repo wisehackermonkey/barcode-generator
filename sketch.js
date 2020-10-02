@@ -63,8 +63,7 @@ function set_generate() {
         if (is_number === 1) {
             alert(`Error Not enough digits: please enter 12 digit number, EX: 123456789012, please add ${12 - barcode_number.length}`)
 
-        }
-        if (contains_letters === 1) {
+        }else if (contains_letters === 1) {
             alert(`Error Please only enter numbers: please enter 12 digit number, EX: 123456789012`)
         } else {
             alert("Error: please enter 12 digit number, EX: 123456789012 ")
